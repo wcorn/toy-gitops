@@ -15,15 +15,10 @@ spec:
     spec:
       containers:
       - name: peter-rollout
-        envFrom:
-        - secretRef:
-            name: {{ .Values.envSecretName }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.targetPort }}
-      imagePullSecrets:
-      - name: {{ .Values.imagePullSecretName }}
   strategy:
     canary:
       maxSurge: {{ .Values.canary.maxSurge }}
