@@ -29,6 +29,4 @@ spec:
       maxSurge: {{ .Values.canary.maxSurge }}
       maxUnavailable: {{ .Values.canary.maxUnavailable }}
       steps:
-      {{- range .Values.canary.steps }}
-      - setWeight: {{ .setWeight }}
-      {{- end }}
+      {{- toYaml .Values.canary.steps | nindent 6 }}
