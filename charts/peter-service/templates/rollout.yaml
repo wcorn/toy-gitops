@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: peter-service-rollout
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Values.selector.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.selector.app }}
+    spec:
+      containers:
+      - name: peter-rollout
+        envFrom:
+        - secretRef:
+            name: {{ .Values.envSecretName }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecretName }}
+  strategy:
+    canary:
+      maxSurge: {{ .Values.canary.maxSurge }}
+      maxUnavailable: {{ .Values.canary.maxUnavailable }}
+      steps:
+      {{- range .Values.canary.steps }}
+      - setWeight: {{ .setWeight }}
+      {{- end }}
