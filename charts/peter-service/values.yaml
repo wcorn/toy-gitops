@@ -20,4 +20,9 @@ canary:
   maxUnavailable: 0
   steps:
     - setWeight: 50
+    - pause:
+        duration: 30s
+    - analysis:
+        templates:
+          - templateName: peter-health-check
     - setWeight: 100
