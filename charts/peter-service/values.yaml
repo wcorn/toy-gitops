@@ -3,7 +3,7 @@ revisionHistoryLimit: 1
 
 image:
   repository: ghcr.io/wcorn/toy
-  tag: 000f0029cca4223817630a230a52023dd6fc87c1
+  tag: c19e2a267ba69c7394767e141b00225ac36b9c83
   pullPolicy: Always
 
 service:
