@@ -19,6 +19,11 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.targetPort }}
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            cpu: 20m
   strategy:
     canary:
       maxSurge: {{ .Values.canary.maxSurge }}
